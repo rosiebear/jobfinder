@@ -18,7 +18,8 @@
   "homepage": "https://github.com/ajaxorg/demo-project",
   "dependencies": {
     "express": "^4.11.1",
-    "jade": "^1.9.1"
+    "jade": "^1.9.1",
+    "mongoose": "^3.8.22"
   },
   "devDependencies": {
     "bower": "^1.3.12"
