@@ -1,6 +1,6 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var jobModel = require('./models/Job');
+var jobsData = require("./jobs-data.js");
 
 var app = express();
 
@@ -10,7 +10,7 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/api/jobs', function(req, res) {
-    mongoose.model('Job').find({}).exec(function(error, collection){
+    jobsData.findJobs().then(function(collection) {
         res.send(collection);
     })
 })
@@ -19,14 +19,11 @@ app.get('*', function(req, res){
     res.render('index');
 });
 
-//mongoose.connect('mongodb://localhost/jobfinder');
-mongoose.connect('mongodb://emrose:poppie@ds039431.mongolab.com:39431/jobfinder')
-
-var con = mongoose.connection;
-
-con.once('open', function(){
+jobsData.connectDB('mongodb://emrose:poppie@ds039431.mongolab.com:39431/jobfinder')
+.then(function() {
     console.log('connected to mongodb successfully!')
-    jobModel.seedJobs();
-})
+    jobsData.seedJobs();
+});
+
 
 app.listen(process.env.PORT, process.env.IP);

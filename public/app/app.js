@@ -1,11 +1,5 @@
-angular.module('app', []);
+angular.module('app', ['ngResource']);
 
-angular.module('app').controller('testCtrl', function($scope) {
-    $scope.jobs = [{
-        title: 'Sales Person',
-        description: 'You will fly dragons'
-    }, {
-        title: 'Account',
-        description: 'You will use a keyboard'
-    }];
+angular.module('app').controller('testCtrl', function($scope, $resource) {
+    $scope.jobs = $resource('/api/jobs').query();
 });
